@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spelletjes en lol! :)</title>
+
+  <link type="text/css" rel="stylesheet" href="css/Gamepage.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+
+
+  <script type="application/processing" data-processing-target="programma">
+  PVector location;
+PVector velocity;
+PVector gravity;
+
+PVector location1;
+PVector velocity1;
+PVector gravity1;
+PVector acc1;
+PVector friction1;
+
+PVector location2;
+PVector velocity2;
+PVector gravity2;
+PVector acc2;
+PVector friction2;
+
+float goingIn = 1;
+float scoreR = 0;
+float scoreL = 0;
+
+void setup() {
+  size(800, 800);
+  colorMode(HSB);
+
+  location = new PVector(400, random(250,690));
+  velocity = new PVector(0,-30);
+  gravity = new PVector(0,2);
+
+  location1 = new PVector(300,690);
+  velocity1 = new PVector(0,-30);
+  gravity1 = new PVector(0,2);
+  acc1 = new PVector(0,0);
+  friction1 = new PVector(0,0);
+
+  location2 = new PVector(500,690);
+  velocity2 = new PVector(0,-30);
+  gravity2 = new PVector(0,2);
+  acc2 = new PVector(0,0);
+  friction2 = new PVector(0,0);
+
+  noStroke();
+  }
+
+
+void draw() {
+  background(150,120,250);
+
+  noStroke();
+  fill(100,240,240);
+  rect(0,700,800,100);
+  fill(100,250,250);
+  rect(0,700,100,100);
+  rect(200,700,100,100);
+  rect(400,700,100,100);
+  rect(600,700,100,100);
+
+  noStroke();
+  fill(50);
+  rect(0,650,800,50);
+  fill(70);
+  rect(0,600,800,50);
+  fill(90);
+  rect(0,550,800,50);
+  fill(110);
+  rect(0,500,800,50);
+  fill(130);
+  rect(0,450,800,50);
+  fill(150);
+  rect(0,400,800,50);
+
+  noStroke();
+  fill(56,255,255);
+  ellipse(20,680,20,20);
+  ellipse(60,680,20,20);
+  ellipse(100,680,20,20);
+  ellipse(140,680,20,20);
+  ellipse(180,680,20,20);
+  ellipse(220,680,20,20);
+  ellipse(260,680,20,20);
+  ellipse(300,680,20,20);
+  ellipse(340,680,20,20);
+  ellipse(380,680,20,20);
+  ellipse(420,680,20,20);
+  ellipse(460,680,20,20);
+  ellipse(500,680,20,20);
+  ellipse(540,680,20,20);
+  ellipse(580,680,20,20);
+  ellipse(620,680,20,20);
+  ellipse(660,680,20,20);
+  ellipse(700,680,20,20);
+  ellipse(740,680,20,20);
+  ellipse(780,680,20,20);
+
+  fill(199,255,255);
+  ellipse(20,630,20,20);
+  ellipse(60,630,20,20);
+  ellipse(100,630,20,20);
+  ellipse(140,630,20,20);
+  ellipse(180,630,20,20);
+  ellipse(220,630,20,20);
+  ellipse(260,630,20,20);
+  ellipse(300,630,20,20);
+  ellipse(340,630,20,20);
+  ellipse(380,630,20,20);
+  ellipse(420,630,20,20);
+  ellipse(460,630,20,20);
+  ellipse(500,630,20,20);
+  ellipse(540,630,20,20);
+  ellipse(580,630,20,20);
+  ellipse(620,630,20,20);
+  ellipse(660,630,20,20);
+  ellipse(700,630,20,20);
+  ellipse(740,630,20,20);
+  ellipse(780,630,20,20);
+
+  fill(56,255,255);
+  ellipse(20,580,20,20);
+  ellipse(60,580,20,20);
+  ellipse(100,580,20,20);
+  ellipse(140,580,20,20);
+  ellipse(180,580,20,20);
+  ellipse(220,580,20,20);
+  ellipse(260,580,20,20);
+  ellipse(300,580,20,20);
+  ellipse(340,580,20,20);
+  ellipse(380,580,20,20);
+  ellipse(420,580,20,20);
+  ellipse(460,580,20,20);
+  ellipse(500,580,20,20);
+  ellipse(540,580,20,20);
+  ellipse(580,580,20,20);
+  ellipse(620,580,20,20);
+  ellipse(660,580,20,20);
+  ellipse(700,580,20,20);
+  ellipse(740,580,20,20);
+  ellipse(780,580,20,20);
+
+  fill(199,255,255);
+  ellipse(20,530,20,20);
+  ellipse(60,530,20,20);
+  ellipse(100,530,20,20);
+  ellipse(140,530,20,20);
+  ellipse(180,530,20,20);
+  ellipse(220,530,20,20);
+  ellipse(260,530,20,20);
+  ellipse(300,530,20,20);
+  ellipse(340,530,20,20);
+  ellipse(380,530,20,20);
+  ellipse(420,530,20,20);
+  ellipse(460,530,20,20);
+  ellipse(500,530,20,20);
+  ellipse(540,530,20,20);
+  ellipse(580,530,20,20);
+  ellipse(620,530,20,20);
+  ellipse(660,530,20,20);
+  ellipse(700,530,20,20);
+  ellipse(740,530,20,20);
+  ellipse(780,530,20,20);
+
+  fill(56,255,255);
+  ellipse(20,480,20,20);
+  ellipse(60,480,20,20);
+  ellipse(100,480,20,20);
+  ellipse(140,480,20,20);
+  ellipse(180,480,20,20);
+  ellipse(220,480,20,20);
+  ellipse(260,480,20,20);
+  ellipse(300,480,20,20);
+  ellipse(340,480,20,20);
+  ellipse(380,480,20,20);
+  ellipse(420,480,20,20);
+  ellipse(460,480,20,20);
+  ellipse(500,480,20,20);
+  ellipse(540,480,20,20);
+  ellipse(580,480,20,20);
+  ellipse(620,480,20,20);
+  ellipse(660,480,20,20);
+  ellipse(700,480,20,20);
+  ellipse(740,480,20,20);
+  ellipse(780,480,20,20);
+
+  fill(199,255,255);
+  ellipse(20,430,20,20);
+  ellipse(60,430,20,20);
+  ellipse(100,430,20,20);
+  ellipse(140,430,20,20);
+  ellipse(180,430,20,20);
+  ellipse(220,430,20,20);
+  ellipse(260,430,20,20);
+  ellipse(300,430,20,20);
+  ellipse(340,430,20,20);
+  ellipse(380,430,20,20);
+  ellipse(420,430,20,20);
+  ellipse(460,430,20,20);
+  ellipse(500,430,20,20);
+  ellipse(540,430,20,20);
+  ellipse(580,430,20,20);
+  ellipse(620,430,20,20);
+  ellipse(660,430,20,20);
+  ellipse(700,430,20,20);
+  ellipse(740,430,20,20);
+  ellipse(780,430,20,20);
+
+  stroke(0);
+  fill(150);
+  rect(30,250,120,100);
+  rect(330,250,120,100);
+  rect(630,250,120,100);
+  noStroke();
+  fill(150);
+  rect(80,350,20,50);
+  rect(380,350,20,50);
+  rect(680,350,20,50);
+
+  stroke(170,255,255);
+  fill(0,255,255);
+  ellipse(location1.x, location1.y, 40,40);
+
+  stroke(0,255,255);
+  fill(170,255,255);
+  ellipse(location2.x, location2.y, 40,40);
+
+  stroke(0);
+  fill(0);
+  rect(300,0,10,100);
+  rect(490,0,10,100);
+  rect(300,50,200,100);
+  fill(255);
+  rect(310,55,80,20);
+  rect(410,55,80,20);
+  rect(310,80,80,60);
+  rect(410,80,80,60);
+  noStroke();
+  fill(44,255,255);
+  ellipse(50,270,20,20);
+  ellipse(90,270,20,20);
+  ellipse(130,270,20,20);
+  ellipse(50,300,20,20);
+  ellipse(90,300,20,20);
+  ellipse(130,300,20,20);
+  ellipse(50,330,20,20);
+  ellipse(90,330,20,20);
+  ellipse(130,330,20,20);
+
+  ellipse(350,270,20,20);
+  ellipse(390,270,20,20);
+  ellipse(430,270,20,20);
+  ellipse(350,300,20,20);
+  ellipse(390,300,20,20);
+  ellipse(430,300,20,20);
+  ellipse(350,330,20,20);
+  ellipse(390,330,20,20);
+  ellipse(430,330,20,20);
+
+  ellipse(650,270,20,20);
+  ellipse(690,270,20,20);
+  ellipse(730,270,20,20);
+  ellipse(650,300,20,20);
+  ellipse(690,300,20,20);
+  ellipse(730,300,20,20);
+  ellipse(650,330,20,20);
+  ellipse(690,330,20,20);
+  ellipse(730,330,20,20);
+
+  stroke(0);
+  fill(255);
+  ellipse(location.x, location.y, 60, 60);
+
+  noStroke();
+  fill(255);
+  rect(20,450,20,260);
+  rect(760,450,20,260);
+
+  stroke(0);
+  fill(0);
+  rect(0,450,2,260);
+  rect(10,450,2,260);
+  rect(20,450,2,260);
+  rect(0,450,20,2);
+  rect(0,470,20,2);
+  rect(0,490,20,2);
+  rect(0,510,20,2);
+  rect(0,530,20,2);
+  rect(0,550,20,2);
+  rect(0,570,20,2);
+  rect(0,590,20,2);
+  rect(0,610,20,2);
+  rect(0,630,20,2);
+  rect(0,650,20,2);
+  rect(0,670,20,2);
+  rect(0,690,20,2);
+
+  rect(780,450,2,260);
+  rect(790,450,2,260);
+  rect(798,450,2,260);
+  rect(780,450,20,2);
+  rect(780,470,20,2);
+  rect(780,490,20,2);
+  rect(780,510,20,2);
+  rect(780,530,20,2);
+  rect(780,550,20,2);
+  rect(780,570,20,2);
+  rect(780,590,20,2);
+  rect(780,610,20,2);
+  rect(780,630,20,2);
+  rect(780,650,20,2);
+  rect(780,670,20,2);
+  rect(780,690,20,2);
+
+  fill(0);
+  textSize(16);
+  text('Rood', 330, 70);
+  text('Blauw', 430, 70);
+  textSize(60);
+  text(scoreL,330,130); text(scoreR, 435,130);
+
+  if (location.y >=690 && velocity.y >0){velocity.y = velocity.y * -1/1.5;}
+  if (location1.y >=690 && velocity1.y >0){location1.y = 690;velocity1.y =0;}
+  if (location2.y >=690 && velocity2.y >0){location2.y = 690;velocity2.y =0;}
+
+  if(location1.x >=760) {location1.x = 760;}
+  if(location2.x >=760) {location2.x = 760;}
+
+  if(location1.x <=40) {location1.x = 40;}
+  if(location2.x <=40) {location2.x = 40;}
+
+  if(location.x <=20) {location.x = 20;}
+  if(location.x >=780) {location.x = 780;}
+
+  if(location.y >=690) {location.y = 690;}
+
+  if (sqrt(sq(location1.x - location2.x)+sq(location1.y - location2.y) ) < 30 && goingIn == 1){velocity1.x = velocity1.x*-0.5;velocity1.y = velocity1.y*-0.9;velocity2.x = velocity2.x*-0.5;velocity2.y = velocity2.y*-0.9;goingIn=0;}
+  if (sqrt(sq(location1.x - location2.x)+sq(location1.y - location2.y) ) > 30){goingIn = 1;}
+
+
+  if (location.x >= 760 && location.y >= 500){scoreL += 1;location.x = 400 ;location.y = random(250,400);velocity.x = 0;velocity.y = 0;location1.x = 200;location1.y = 750;location2.x = 600;location2.y = 750;}
+  if (location.x <= 40 && location.y >= 500){scoreR += 1;location.x = 400 ;location.y = random(250,400);velocity.x = 0;velocity.y = 0;location1.x = 200;location1.y = 750;location2.x = 600;location2.y = 750;}
+
+  friction1.x = velocity1.x/15*-1;
+  friction2.x = velocity2.x/15*-1;
+
+  if (sqrt(sq(location1.x - location.x)+sq(location1.y - location.y) ) < 55){
+  velocity.x=velocity1.x*2;
+  velocity.y=velocity1.y*1.6;}
+
+  if (sqrt(sq(location2.x - location.x)+sq(location2.y - location.y) ) < 55){
+  velocity.x=velocity2.x*2;
+  velocity.y=velocity2.y*1.6;
+
+  if (location.x >= 730 && location.y <= 400){location.x = 730;velocity.x = velocity.x*-0.5;}
+  if (location.x <= 70 && location.y <= 400){location.x = 70;velocity.x = velocity.x*-0.5;}
+
+}
+
+location.add(velocity);
+velocity.add(gravity);
+
+location1.add(velocity1);
+velocity1.add(gravity1);
+velocity1.add(acc1);
+velocity1.add(friction1);
+
+location2.add(velocity2);
+velocity2.add(gravity2);
+velocity2.add(acc2);
+velocity2.add(friction2);
+
+friction1.x = velocity1.x/15*-1;
+friction2.x = velocity2.x/15*-1;
+}
+
+  void keyPressed(){
+  if(key == 'w' && location1.y == 690){
+      velocity1.y = -25;
+  }
+  if(key == 'd'){
+  acc1.x = 0.5;
+  }
+  if(key == 'a'){
+  acc1.x = -0.5;
+  }
+
+  if(keyCode == '38' && location2.y == 690){
+      velocity2.y = -25;
+  }
+      if(keyCode == '39'){
+  acc2.x = 0.5;
+  }
+      if(keyCode == '37'){
+  acc2.x = -0.5;
+  }
+  }
+
+  void keyReleased(){
+  if(key == 'd' && acc1.x >  0){
+      acc1.x = 0;}
+  if(key == 'a' && acc1.x <  0){
+      acc1.x = 0;}
+
+  if(keyCode == '39' && acc2.x >  0){
+      acc2.x = 0;}
+  if(keyCode == '37' && acc2.x <  0){
+      acc2.x = 0;}
+}
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+
+  <div class="TopBar">
+    <div class="Logo">
+      <h1><a href="index.html">Speluh.nl</a></h1>
+    </div>
+
+  </div>
+
+
+  <div class="container">
+    <div class="Game">
+      <canvas id="programma"></canvas>
+    </div>
+
+
+    <div class="description">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+        aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+  </div>
+
+
+  <footer>
+    <p>
+      <br />
+      <span id="Cnotice">
+        &#xa9; 2020 Speluh inc.</span>
+      <p>
+        <span id="privacy">
+          Wij gebruiken enkel trackingcookies om u, en uw familieleden, persoonlijk te bespieden.
+        </span>
+        <br />
+        <br />
+  </footer>
+
+
+</body>
+
+</html>

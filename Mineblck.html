@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+    <title>Spelletjes en lol! :)</title>
+
+  <link type="text/css" rel="stylesheet" href="css/Gamepage.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+
+
+  <script type="application/processing" data-processing-target="programma">
+    float counter = 0;
+
+//import processing.sound."Bruh.wav";
+//SoundFile sound;
+
+
+void setup() {
+    size(800, 800);
+    background(200);
+    bgimg = loadImage("images/Mineblck/Minecraft background.jpg");
+    endimg = loadImage("images/Mineblck/kip_met_ei-1.png");
+    D1 = loadImage("images/Mineblck/Dither1.png");
+    D2 = loadImage("images/Mineblck/Dither2.png");
+    D3 = loadImage("images/Mineblck/Dither3.png");
+    grass = loadImage("images/Mineblck/grass_block_side.jpg");
+    stone = loadImage("images/Mineblck/stone.jpg");
+    coal = loadImage("images/Mineblck/coal_ore.jpg");
+    iron = loadImage("images/Mineblck/iron_ore.jpg");
+    lapis = loadImage("images/Mineblck/lapis_ore.jpg");
+    redstone = loadImage("images/Mineblck/redstone_ore.jpg");
+    gold = loadImage("images/Mineblck/gold_ore.jpg");
+    emerald = loadImage("images/Mineblck/emerald_ore.jpg");
+    diamond = loadImage("images/Mineblck/diamond_ore.jpg");
+    obsidian = loadImage("images/Mineblck/obsidian.jpg");
+    bedrock = loadImage("images/Mineblck/bedrock.jpg");
+    cursor1 = loadImage("images/Mineblck/150px-Diamond_Pickaxe.png");
+    cursor2 = loadImage("images/Mineblck/Minecraft_Iron_Sword.png");
+    noCursor();
+//sound = new SoundFile(this,"Bruh.wav");
+// SOUNDFILE IS NOT DEFINED
+}
+
+void mousePressed()
+{
+  if(mouseX >200 && mouseX<600 && mouseY>200 && mouseY<600 && mouseButton == LEFT)
+  {
+    counter += 1;
+        //if (counter >= 67){sound.play};
+  }
+     if(mouseX >200 && mouseX<600 && mouseY>200 && mouseY<600 && mouseButton == RIGHT)
+  {
+    (counter -= 1);
+
+} }
+
+void draw() {
+imageMode(CORNER);
+image(bgimg, 0, 0);
+text(counter+"",50,50);
+//constrain(counter, 0, 69);
+
+
+// hiertussen en
+if (counter >= 0 && counter <= 3){image(grass,200,200);}
+if (counter == 1){image(D1,200,200);}
+if (counter == 2){image(D2,200,200);}
+if (counter == 3){image(D3,200,200);}
+//
+if (counter >= 4 && counter <= 8){image(stone,200,200);}
+if (counter == 5){image(D1,200,200);}
+if (counter == 6){image(D2,200,200);}
+if (counter == 7 || counter == 8){image(D3,200,200);}
+//
+if (counter >= 9 && counter <= 13){image(coal,200,200);}
+if (counter == 10){image(D1,200,200);}
+if (counter == 11){image(D2,200,200);}
+if (counter == 12 || counter == 13){image(D3,200,200);}
+////
+if (counter >= 14 && counter <= 19){image(iron,200,200);}
+if (counter == 15){image(D1,200,200);}
+if (counter == 16 || counter == 17){image(D2,200,200);}
+if (counter == 18 || counter == 19){image(D3,200,200);}
+////
+if (counter >= 20 && counter <= 25){image(lapis,200,200);}
+if (counter == 21){image(D1,200,200);}
+if (counter == 22 || counter == 23){image(D2,200,200);}
+if (counter == 24 || counter == 25){image(D3,200,200);}
+////
+if (counter >= 26 && counter <= 32){image(redstone,200,200);}
+if (counter == 27 || counter == 28){image(D1,200,200);}
+if (counter == 29 || counter == 30){image(D2,200,200);}
+if (counter == 31 || counter == 32){image(D3,200,200);}
+////
+if (counter >= 33 && counter <= 39){image(gold,200,200);}
+if (counter == 34 || counter == 35){image(D1,200,200);}
+if (counter == 36 || counter == 37){image(D2,200,200);}
+if (counter == 38 || counter == 39){image(D3,200,200);}
+////
+if (counter >= 40 && counter <= 46){image(emerald,200,200);}
+if (counter == 41 || counter == 42){image(D1,200,200);}
+if (counter == 43 || counter == 44){image(D2,200,200);}
+if (counter == 45 || counter == 46){image(D3,200,200);}
+////
+if (counter >= 47 && counter <= 54){image(diamond,200,200);}
+if (counter == 49 || counter == 50){image(D1,200,200);}
+if (counter == 51 || counter == 52){image(D2,200,200);}
+if (counter == 53 || counter == 54){image(D3,200,200);}
+////
+if (counter >= 54 && counter <= 65){image(obsidian,200,200);}
+if (counter == 57 || counter == 58 || counter == 59){image(D1,200,200);}
+if (counter == 60 || counter == 61 || counter == 62){image(D2,200,200);}
+if (counter == 63 || counter == 64 || counter == 65){image(D3,200,200);}
+////
+if (counter >= 67){image(bedrock,200,200);}
+// als je klikt BRUH
+//
+    if (counter >=67){counter = 67};
+
+//hiertussen afbeeldingen pompen
+
+if (counter == 66){image(endimg, 200,200);
+textSize(15);
+text("You Win!", 490 ,530 );
+fill(0, 0, 0); }
+
+if (counter == 66){image(cursor2,mouseX,mouseY,50,50)};
+if (!(counter == 66)){image(cursor1,mouseX,mouseY,50,50)};
+
+
+}
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+
+  <div class="TopBar">
+    <div class="Logo">
+      <h1><a href="index.html">Speluh.nl</a></h1>
+    </div>
+
+  </div>
+
+
+  <div class="container">
+    <div class="Game">
+      <canvas id="programma"></canvas>
+    </div>
+
+
+    <div class="description">
+      <p>
+        Door met linkermuisknop te hakken op het blok op je scherm, zal het blok beschadigen. Let op, de blokken worden sterker na elk blok!
+        Mocht je een bepaald blok mooi vinden, en hem langer wil bewonderen, gebruik dan je rechtermuisknop om naar het vorige blok te gaan!
+
+      </p>
+    </div>
+  </div>
+
+
+  <footer>
+    <p>
+      <br />
+      <span id="Cnotice">
+        &#xa9; 2020 Speluh inc.</span>
+      <p>
+        <span id="privacy">
+          Wij gebruiken enkel trackingcookies om u, en uw familieleden, persoonlijk te bespieden.
+        </span>
+        <br />
+        <br />
+  </footer>
+
+
+</body>
+
+</html>

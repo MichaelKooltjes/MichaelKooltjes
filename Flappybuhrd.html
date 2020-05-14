@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spelletjes en lol! :)</title>
+
+  <link type="text/css" rel="stylesheet" href="css/Gamepage.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+
+
+  <script type="application/processing" data-processing-target="programma">
+    float Box_x = 200;
+    float Box_y = 100;
+    float Gravity = 0;
+    float running = false;
+    float run = 0;
+    float x1 = 800;
+    float x2 = 1200;
+    float y1 = random(-400, 0);
+    float y2 = y1 + 600;
+    float y3 = random(-400, 0);
+    float y4 = y3 + 600;
+    float obst_speed = 0;
+    float score = 0;
+    float highscore = 0;
+    float x11 = 10;
+    float x22 = x11+800;
+    float x33 = x11+1500;
+    float x44 = x11+2000;
+    float color1 = random(255);
+    float color2 = color1+255/2;
+    PImage img_M;
+
+
+    class Box {
+      void show() {
+            colorMode(HSB);
+            stroke(color2,255,180);
+            strokeWeight(3);
+        fill(color2, 255, 255);
+        rect(Box_x,Box_y,40,20);
+            Gravity = Gravity + run;
+            Box_y = Box_y + Gravity;
+            colorMode(RGB);
+      }
+    }
+    class Obstacle {
+        void show() {
+            fill(0,210,0);
+            stroke(0);
+            rect(x1,y1,50,500);
+            rect(x1,y2,50,600);
+            x1 = x1 - obst_speed;
+            rect(x2,y3,50,500);
+            rect(x2,y4,50,600);
+            x2 = x2 - obst_speed;
+        }
+    }
+    class Ground {
+      void show() {
+            noStroke();
+            colorMode(HSB);
+        fill(color1,150,100);
+        rect(0,650,800,150);
+            image(img_M, 730, 635, 80, 80);
+            colorMode(RGB);
+
+      }
+    }
+
+    class Score {
+        void show() {
+            colorMode(HSB);
+            fill(color2,255,150);
+            colorMode(RGB);
+            textAlign(CENTER);
+        textSize(80);
+            text(int(score), 400, 80);
+            fill(255);
+            textSize(18);
+            text("Highscore:"+int(highscore), 60, 680);
+        }
+    }
+    void setup() {
+        size(800,800);
+        frameRate(90);
+        img_M = loadImage ("/images/M.png");
+    }
+
+    Box b = new Box();
+    Obstacle o = new Obstacle ();
+    Ground g = new Ground();
+    Score s = new Score();
+
+    void draw() {
+        colorMode(HSB);
+        background(color1,50,255);
+            color1 += 0.05;
+            color2 = color1 + 255/2;
+            if (color1 >= 255){color1 = 0;}
+            if(color2 >= 255){color2 += -255;}
+            fill(color1,150,150);
+            ellipse(x22,700,1100,400);
+        fill(color1,150,150);
+            ellipse(x44,700,1100,400);
+            fill(color1,150,200);
+            ellipse(x11,700,1100,400);
+          fill(color1,150,200);
+            ellipse(x33,700,1100,400);
+        if (running == true){
+        x11 += -1;
+        x22 += -1;
+        x33 += -1;
+            x44 += -1;
+        }
+        if (x11 < -800) {x11 = 2050;}
+        if (x22 < -800) {x22 = 2050;}
+        if (x33 < -800) {x33 = 2050;}
+        if (x44 < -800) {x44 = 2050;}
+            colorMode(RGB);
+        b.show();
+        o.show();
+        g.show();
+        s.show();
+
+        if(running == false){colorMode(HSB);fill(color2,255,150);textSize(40);text("Touch or click to start!",width/2,height/2);colorMode(RGB);}
+
+        if (score > highscore) {
+            highscore = score;
+        }
+        if ((x1 >= 170 && x1 <= 180) || (x2 >= 170 && x2 <= 180)) {
+            score = score + 0.25;
+        }
+        if ((x1 <= 240 && x1 >= 150 && Box_y <= y1 + 500) || (x1 <= 240 && x1 >= 150 && Box_y >= y2 - 20)) {
+            Box_y = 100;
+            run = 0;
+            running = false;
+            Gravity = 0;
+            score = 0;
+        }
+        if ((x2 <= 240 && x2 >= 150 && Box_y <= y3 + 500) || (x2 <= 240 && x2 >= 150 && Box_y >= y4 - 20)) {
+            Box_y = 100;
+            run = 0;
+            running = false;
+            Gravity = 0;
+            score = 0;
+        }
+        if (x1 <= -50) {
+            x1 = 800;
+            y1 = random(-400, 0);
+            y2 = y1 + 600;
+        }
+        if (x2 <= -50) {
+            x2 = 800;
+            y3 = random(-400, 0);
+            y4 = y3 + 600;
+        }
+        if (Box_y >= 630) {
+            Box_y = 100;
+            run = 0;
+            running = false;
+            Gravity = 0;
+            score = 0;
+        }
+        if (running == false) {
+            obst_speed = 0;
+            x1 = 800;
+            x2 = 1200;
+        }
+    }
+        void keyPressed() {
+
+        if (key == ' ' && running == true) {
+            Gravity = -4;
+        }
+        if (key == ' ' && running == false) {
+            running = true;
+            run = 0.1;
+            obst_speed = 3;
+        }
+        }
+    void mousePressed(){
+
+        if (running == true) {
+            Gravity = -4;
+        }
+        if (running == false) {
+            running = true;
+            run = 0.1;
+            obst_speed = 3;
+        }
+        }
+    </script>
+</head>
+
+
+<body>
+
+
+  <div class="TopBar">
+    <div class="Logo">
+      <h1><a href="index.html">Speluh.nl</a></h1>
+    </div>
+
+  </div>
+
+
+  <div class="container">
+    <div class="Game">
+      <canvas id="programma"></canvas>
+    </div>
+
+
+    <div class="description">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+        aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+  </div>
+
+
+  <footer>
+    <p>
+      <br />
+      <span id="Cnotice">
+        &#xa9; 2020 Speluh inc.</span>
+      <p>
+        <span id="privacy">
+          Wij gebruiken enkel trackingcookies om u, en uw familieleden, persoonlijk te bespieden.
+        </span>
+        <br />
+        <br />
+  </footer>
+
+
+</body>
+
+</html>
