@@ -24,6 +24,12 @@ footer {
   margin-bottom: 12px;
   margin-left: 5px;
   margin-right: 5px;
+  cursor: pointer;
+}
+
+.container:hover {
+  background-color: #41509c;
+  transition: ease-in 0.2s;
 }
 
 .cell {
@@ -53,7 +59,6 @@ footer {
   text-align: justify;
   font-family: sans-serif;
   color: #d6d6d6;
-
 }
 
 .title h1 {
@@ -75,4 +80,9 @@ footer {
   color: #d6d6d6;
   font-style: italic;
   font-size: 15px;
+}
+
+::selection {
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 180, 180);
 }
