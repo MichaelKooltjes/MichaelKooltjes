@@ -148,7 +148,7 @@
  	noCursor();
  	//new circle
  	c.show();
- 	bright+= -z;
+ 	if(bright-z>0){bright+= -z;}else dead = 1;
 
  	//reticle
  	imageMode(CENTER);
@@ -191,7 +191,7 @@
  		fill(255);
  		text("RETRY",width/2,615);
  	}
- 	if (bright <= 0) {
+ 	if (bright <= 0 && !(dead==1)) {
  		dead = 1;
  	}
  }
