@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spelletjes en lol! :)</title>
+
+  <link type="text/css" rel="stylesheet" href="css/Gamepage.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+
+
+  <script type="application/processing" data-processing-target="programma">
+    float counter = 0;
+    PVector location;
+    PVector velocity;
+
+    PVector location1;
+    PVector velocity1;
+    PVector gravity;
+
+    float startspeed = 7;
+
+    float speed = 10;
+    float obsSpeed1 = startspeed;
+    float obsSpeed2 = startspeed;
+    float obsSpeed3 = startspeed;
+
+    float difficulty = 0;
+
+    float color1 = random(255);
+    float color2 = color1+255/2;
+
+    float x1 = random(100,700);
+    float y1 = random(-1500-(obsSpeed1*10),-200);
+    float x2 = random(150,650);
+    float y2 = random(-1500-(obsSpeed2*10),-200);
+    float x3 = random(50,650);
+    float y3 = random(-1500-(obsSpeed3*10),-200);
+
+    float score = 0;
+    float highscore_easy = 0;
+    float highscore_medium = 0;
+    float highscore_hard = 0;
+    float running = false;
+    float dead = false;
+    float mode = 0;
+
+    void setup() {
+    	size(800,800);
+    	colorMode(HSB);
+    	rectMode(CENTER);
+    	textAlign(CENTER);
+    	imageMode(CENTER);
+    	home = loadImage("home.png");
+    	location = new PVector(400,600);
+      velocity = new PVector(0,0);
+    	location1 = new PVector(100,100);
+      velocity1 = new PVector(3,2.1);
+      gravity = new PVector(0,0.1);
+    }
+
+    void draw() {
+    	if(score > highscore_easy && mode == 1){highscore_easy = int(score);}
+    	if(score > highscore_medium && mode == 2){highscore_medium = int(score);}
+    	if(score > highscore_hard && mode == 3){highscore_hard = int(score);}
+    	//color things
+    	background(color1,180,180);
+    		color1 += 0.05;
+    		color2 = color1 + 255/2;
+    		if(color2 >= 255){color2 += -255;}
+    		if (color1 >= 255){color1 = 0;}
+    	if(mode==1){difficulty = 0.2;}
+    	if(mode==2){difficulty = 0.4;}
+    	if(mode==3){difficulty = 0.8;}
+    	if(mode == 0){
+    		background(color1,180,180);
+    		color1 += 0.05;
+    		color2 = color1 + 255/2;
+    		if(color2 >= 255){color2 += -255;}
+    		if (color1 >= 255){color1 = 0;}
+
+    		 location1.add(velocity1);
+      velocity1.add(gravity);
+
+
+      if ((location1.x > width) || (location1.x < 0)) {
+        velocity1.x = velocity1.x * -1;
+      }
+      if (location1.y > height) {
+        velocity1.y = velocity1.y * -0.95;
+        location1.y = height;
+      }
+
+      stroke(255);
+      strokeWeight(2);
+      fill(color2,255,255,180);
+      triangle(location1.x-50,location1.y+50,location1.x+50,location1.y+50,location1.x,location1.y-50);
+
+
+    	noStroke();
+    		fill(0,0,0,180);
+    		if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+    		rect(width/4,500,180,80);
+    		fill(0,0,0,180);
+    		if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+    		rect(width/2,500,180,80);
+    		fill(0,0,0,180);
+    		if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+    		rect(width*3/4,500,180,80);
+    		colorMode(RGB);
+    		fill(50,100,255);
+    		textSize(40);
+    		text("Easy",width/4,512);
+    		fill(255,200,50);
+    		textSize(40);
+    		text("Medium",width/2,512);
+    		fill(255,50,50);
+    		textSize(40);
+    		text("Hard",width*3/4,512);
+    		colorMode(HSB);
+    		fill(255);
+    		fill(color2,255,200);
+    		textSize(60);
+    		text("Choose difficulty",width/2,350);
+    		textSize(100);
+    		text("DodgeBlcks",width/2,150);
+
+    		textSize(40);
+    		text("Highscores",width/2,720);
+    		textSize(30);
+    		text("Easy: "+highscore_easy,width/4,790);
+    		text("Medium: "+highscore_medium,width/2,790);
+    		text("Hard: "+highscore_hard,width*3/4,790);
+
+    	}
+    	if(dead==true && !(mode==0)){
+    		background(0,255,255);
+    		cursor();
+    		fill(255);
+    		textSize(80);
+    	if(mode == 1){text("Easy",width/2,90);textSize(30);text("Highscore Easy: "+highscore_easy,width/2,790);}
+    		if(mode == 2){text("Medium",width/2,90);textSize(30);text("Highscore Medium: "+highscore_medium,width/2,790);}
+    		if(mode == 3){text("Hard",width/2,90);textSize(30);text("Highscore Hard: "+highscore_hard,width/2,790);}
+    		textSize(300);
+    		text(int(score),width/2,height/2);
+    		textSize(50);
+    		text("Thanks for playing!",width/2,480);
+    		noStroke();
+    		fill(0,0,0,180);
+    		if(mouseX > 200 && mouseX < 600 && mouseY > 540 && mouseY < 660) {fill(0,0,0,255);}
+    		rect(width/2,600,400,120);
+    		fill(0,0,0,180);
+    		if(mouseX > 640 && mouseX < 760 && mouseY > 540 && mouseY < 660) {fill(0,0,0,255);}
+    		rect(700,600,120,120);
+    		image(home,700,600,100,100);
+    		fill(255);
+    		text("RETRY",width/2,615);
+    	}
+
+    	if(dead==false && !(mode==0)){
+    	//text
+    	if(running==false){
+    		fill(255);
+    		textSize(30);
+    		text("Use the arrow keys to dodge the blocks!",width/2,height/2);
+    	}
+    	if(running==true){textSize(90);text(int(score),width/2,height/2);}
+
+
+    	//player
+    	stroke(color2,255,180);
+    		strokeWeight(3);
+        fill(color2, 255, 255);
+    	rect(location.x,location.y,40,40);
+    	location.add(velocity);
+    	if(location.x >= width){location.x = width;}
+    	if(location.x <= 0){location.x = 0;}
+    	if(location.y >= height){location.y = height;}
+    	if(location.y <= 0){location.y = 0;}
+
+
+    	//obstacles
+    	stroke(color2,100,180);
+    	fill(color2, 100, 255);
+    	rect(x1,y1,300,150);
+    	rect(x2,y2,400,50);
+    	rect(x3,y3,200,300);
+    	if(running==true){y1+=obsSpeed1,y2+=obsSpeed2,y3+=obsSpeed3;}
+    	if(y1 >= 875){y1 = random(-1500-(obsSpeed1*10),-200);x1 = random(150,650);obsSpeed1+=difficulty;}
+    	if(y2 >= 825){y2 = random(-1500-(obsSpeed2*10),-200);x2 = random(200,600);obsSpeed2+=difficulty;}
+    	if(y3 >= 950){y3 = random(-1500-(obsSpeed3*10),-200);x3 = random(100,700);obsSpeed3+=difficulty;}
+
+    	//hit obstacle = dead
+    	if((location.x>=x1-170 && location.x<=x1+170 && location.y>=y1-95 && location.y<=y1+95) || (location.x>=x2-220 && location.x<=x2+220 && location.y>=y2-45 && location.y<=y2+45) || (location.x>=x3-120 && location.x<=x3+120 && location.y>=y3-170 && location.y<=y3+170)){
+    		dead=true;
+    		running=false;x1 = random(150,650);y1 = random(-1500-(obsSpeed1*10),-200);
+    	  y2 = random(-1500-(obsSpeed2*10),-200);x2 = random(200,600);
+    	  y3 = random(-1500-(obsSpeed3*10),-200);x3 = random(100,700);
+    	  obsSpeed1=startspeed;obsSpeed2=startspeed;obsSpeed3=startspeed; location.x = width/2; location.y}
+
+    	if(running == true){score += 0.1;}
+    	}
+    }
+
+    void keyPressed() {
+    	if(!(mode==0)){running = true;}
+      if (keyCode == DOWN) {
+        velocity.y = speed;
+      } else if (keyCode == UP) {
+        velocity.y = -speed;
+      } else if (keyCode == RIGHT) {
+        velocity.x = speed;
+      } else if (keyCode == LEFT) {
+        velocity.x = -speed;
+      }
+    }
+    void keyReleased() {
+      if (keyCode == DOWN) {
+        if (velocity.y == speed) {
+          velocity.y = 0;
+        }
+      } else if (keyCode == UP) {
+        if (velocity.y == -speed) {
+          velocity.y = 0;
+        }
+      } else if (keyCode == RIGHT) {
+        if (velocity.x == speed) {
+          velocity.x = 0;
+        }
+      } else if (keyCode == LEFT) {
+        if (velocity.x == -speed) {
+          velocity.x = 0;
+        }
+      }
+
+    }
+
+    void mouseClicked(){
+    	if(mouseX > 200 && mouseX < 600 && mouseY > 540 && mouseY < 660 && dead == true) {
+    		dead = false;
+    		score = 0;
+    	  }
+    	if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 1; dead = false;}
+    	if(mouseX > location1.x-40 && mouseX < location1.x+40 && mouseY > location1.y-40 && mouseY < location1.y+40 && mode == 0) {velocity1.y = -8}
+    	if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 2; dead = false;}
+    	if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 3; dead = false;}
+    	if(mouseX > 640 && mouseX < 760 && mouseY > 540 && mouseY < 660 && dead == true) {
+    		mode = 0;
+    		dead = false;
+    		score = 0;
+    	}
+    }
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+
+  <div class="TopBar">
+    <div class="Logo">
+      <h1><a href="index.html">Speluh.nl</a></h1>
+    </div>
+
+  </div>
+
+
+  <div class="container">
+    <div class="Game">
+      <canvas id="programma"></canvas>
+    </div>
+
+
+    <div class="description">
+      <p>
+        Door met linkermuisknop te hakken op het blok op je scherm, zal het blok beschadigen. Let op, de blokken worden sterker na elk blok!
+        Mocht je een bepaald blok mooi vinden, en hem langer wil bewonderen, gebruik dan je rechtermuisknop om naar het vorige blok te gaan!
+      </p>
+    </div>
+  </div>
+
+
+  <footer>
+    <p>
+      <br />
+      <span id="Cnotice">
+        &#xa9; 2020 Speluh inc.</span>
+      <p>
+        <span id="privacy">
+          Wij gebruiken enkel trackingcookies om u, en uw familieleden, persoonlijk te bespieden.
+        </span>
+        <br />
+        <br />
+  </footer>
+
+
+</body>
+
+</html>
