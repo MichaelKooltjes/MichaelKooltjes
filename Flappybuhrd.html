@@ -12,187 +12,301 @@
 
 
   <script type="application/processing" data-processing-target="programma">
-    float Box_x = 200;
-    float Box_y = 100;
-    float Gravity = 0;
-    float running = false;
-    float run = 0;
-    float x1 = 800;
-    float x2 = 1200;
-    float y1 = random(-400, 0);
-    float y2 = y1 + 600;
-    float y3 = random(-400, 0);
-    float y4 = y3 + 600;
-    float obst_speed = 0;
-    float score = 0;
-    float highscore = 0;
-    float x11 = 10;
-    float x22 = x11+800;
-    float x33 = x11+1500;
-    float x44 = x11+2000;
-    float color1 = random(255);
-    float color2 = color1+255/2;
-    PImage img_M;
+  PVector location;
+PVector velocity;
+
+float Box_x = 200;
+float Box_y = 100;
+float Gravity = 0;
+float running = false;
+float run = 0;
+float x1 = 800;
+float x2 = 1200;
+float y1 = random(-400, 0);
+float y3 = random(-400, 0);
+float obst_speed = 0;
+float score = 0;
+float highscore = 0;
+float x11 = 10;
+float x22 = x11+800;
+float x33 = x11+1500;
+float x44 = x11+2000;
+float color1 = random(255);
+float color2 = color1+255/2;
+float mode = 0;
+float easy = 650;
+float medium = 625;
+float hard = 600;
+float highscore_easy = 0;
+float highscore_medium = 0;
+float highscore_hard = 0;
+PImage img_M;
 
 
-    class Box {
-      void show() {
-            colorMode(HSB);
-            stroke(color2,255,180);
-            strokeWeight(3);
-        fill(color2, 255, 255);
-        rect(Box_x,Box_y,40,20);
-            Gravity = Gravity + run;
-            Box_y = Box_y + Gravity;
-            colorMode(RGB);
-      }
-    }
-    class Obstacle {
-        void show() {
-            fill(0,210,0);
-            stroke(0);
-            rect(x1,y1,50,500);
-            rect(x1,y2,50,600);
-            x1 = x1 - obst_speed;
-            rect(x2,y3,50,500);
-            rect(x2,y4,50,600);
-            x2 = x2 - obst_speed;
-        }
-    }
-    class Ground {
-      void show() {
-            noStroke();
-            colorMode(HSB);
-        fill(color1,150,100);
-        rect(0,650,800,150);
-            image(img_M, 730, 635, 80, 80);
-            colorMode(RGB);
+class Box {
+void show() {
+  colorMode(HSB);
+  stroke(color2,255,180);
+  strokeWeight(3);
+  fill(color2, 255, 255);
+  rect(Box_x,Box_y,40,20);
+  Gravity = Gravity + run;
+  Box_y = Box_y + Gravity;
+  colorMode(RGB);
+}
+}
+class Obstacle {
+void show() {
+  fill(0,210,0);
+  stroke(0);
+  rect(x1,y1,50,500);
+  if(mode==1){rect(x1,y1+easy,50,600);}
+  if(mode==2){rect(x1,y1+medium,50,600);}
+  if(mode==3){rect(x1,y1+hard,50,600);}
+  x1 = x1 - obst_speed;
+  rect(x2,y3,50,500);
+  if(mode==1){rect(x2,y3+easy,50,600);}
+  if(mode==2){rect(x2,y3+medium,50,600);}
+  if(mode==3){rect(x2,y3+hard,50,600);}
+  x2 = x2 - obst_speed;
+}
+}
+class Ground {
+void show() {
+  noStroke();
+  colorMode(HSB);
+  fill(color1,150,100);
+  rect(0,650,800,150);
+  colorMode(RGB);
 
-      }
-    }
+}
+}
 
-    class Score {
-        void show() {
-            colorMode(HSB);
-            fill(color2,255,150);
-            colorMode(RGB);
-            textAlign(CENTER);
-        textSize(80);
-            text(int(score), 400, 80);
-            fill(255);
-            textSize(18);
-            text("Highscore:"+int(highscore), 60, 680);
-        }
-    }
-    void setup() {
-        size(800,800);
-        frameRate(90);
-        img_M = loadImage ("/images/M.png");
-    }
+class Score {
+void show() {
+  colorMode(HSB);
+  fill(color2,255,150);
+  colorMode(RGB);
+  textAlign(CENTER);
+  textSize(80);
+  text(int(score), 400, 80);
+  fill(255);
+  textSize(18);
+  if(mode==1){text("Highscore:"+int(highscore_easy), width/2, 780);textSize(60);text("EASY", width/2, 740)}
+  if(mode==2){text("Highscore:"+int(highscore_medium), width/2, 780);textSize(60);text("MEDIUM", width/2, 740)}
+  if(mode==3){text("Highscore:"+int(highscore_hard), width/2, 780);textSize(60);text("HARD", width/2, 740)}
+}
+}
 
-    Box b = new Box();
-    Obstacle o = new Obstacle ();
-    Ground g = new Ground();
-    Score s = new Score();
+void setup() {
+size(800,800);
+frameRate(90);
+home = loadImage("home.png");
+rectMode(CENTER);
+textAlign(CENTER);
+location = new PVector(100,100);
+velocity = new PVector(3,2.1);
+gravity = new PVector(0,0.1);
+}
 
-    void draw() {
-        colorMode(HSB);
-        background(color1,50,255);
-            color1 += 0.05;
-            color2 = color1 + 255/2;
-            if (color1 >= 255){color1 = 0;}
-            if(color2 >= 255){color2 += -255;}
-            fill(color1,150,150);
-            ellipse(x22,700,1100,400);
-        fill(color1,150,150);
-            ellipse(x44,700,1100,400);
-            fill(color1,150,200);
-            ellipse(x11,700,1100,400);
-          fill(color1,150,200);
-            ellipse(x33,700,1100,400);
-        if (running == true){
-        x11 += -1;
-        x22 += -1;
-        x33 += -1;
-            x44 += -1;
-        }
-        if (x11 < -800) {x11 = 2050;}
-        if (x22 < -800) {x22 = 2050;}
-        if (x33 < -800) {x33 = 2050;}
-        if (x44 < -800) {x44 = 2050;}
-            colorMode(RGB);
-        b.show();
-        o.show();
-        g.show();
-        s.show();
+Box b = new Box();
+Obstacle o = new Obstacle ();
+Ground g = new Ground();
+Score s = new Score();
 
-        if(running == false){colorMode(HSB);fill(color2,255,150);textSize(40);text("Touch or click to start!",width/2,height/2);colorMode(RGB);}
+void draw() {
+if(score > highscore_easy && mode == 1){highscore_easy = score;}
+if(score > highscore_medium && mode == 2){highscore_medium = score;}
+if(score > highscore_hard && mode == 3){highscore_hard = score;}
+colorMode(HSB);
+background(color1,50,255);
+  color1 += 0.05;
+  color2 = color1 + 255/2;
+  if (color1 >= 255){color1 = 0;}
+  if(color2 >= 255){color2 += -255;}
+if(mode==0){
+  rectMode(CENTER);
+  location.add(velocity);
+  velocity.add(gravity);
 
-        if (score > highscore) {
-            highscore = score;
-        }
-        if ((x1 >= 170 && x1 <= 180) || (x2 >= 170 && x2 <= 180)) {
-            score = score + 0.25;
-        }
-        if ((x1 <= 240 && x1 >= 150 && Box_y <= y1 + 500) || (x1 <= 240 && x1 >= 150 && Box_y >= y2 - 20)) {
-            Box_y = 100;
-            run = 0;
-            running = false;
-            Gravity = 0;
-            score = 0;
-        }
-        if ((x2 <= 240 && x2 >= 150 && Box_y <= y3 + 500) || (x2 <= 240 && x2 >= 150 && Box_y >= y4 - 20)) {
-            Box_y = 100;
-            run = 0;
-            running = false;
-            Gravity = 0;
-            score = 0;
-        }
-        if (x1 <= -50) {
-            x1 = 800;
-            y1 = random(-400, 0);
-            y2 = y1 + 600;
-        }
-        if (x2 <= -50) {
-            x2 = 800;
-            y3 = random(-400, 0);
-            y4 = y3 + 600;
-        }
-        if (Box_y >= 630) {
-            Box_y = 100;
-            run = 0;
-            running = false;
-            Gravity = 0;
-            score = 0;
-        }
-        if (running == false) {
-            obst_speed = 0;
-            x1 = 800;
-            x2 = 1200;
-        }
-    }
-        void keyPressed() {
+   if ((location.x > width) || (location.x < 0)) {
+  velocity.x = velocity.x * -1;
+}
+if (location.y > height) {
+  velocity.y = velocity.y * -0.95;
+  location.y = height;
+}
 
-        if (key == ' ' && running == true) {
-            Gravity = -4;
-        }
-        if (key == ' ' && running == false) {
-            running = true;
-            run = 0.1;
-            obst_speed = 3;
-        }
-        }
-    void mousePressed(){
+stroke(color2,255,200);
+strokeWeight(5);
+fill(color2,255,255,180);
+rect(location.x,location.y,80,80);
 
-        if (running == true) {
-            Gravity = -4;
-        }
-        if (running == false) {
-            running = true;
-            run = 0.1;
-            obst_speed = 3;
-        }
-        }
+noStroke();
+  fill(0,0,0,180);
+  if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+  rect(width/4,500,180,80);
+  fill(0,0,0,180);
+  if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+  rect(width/2,500,180,80);
+  fill(0,0,0,180);
+  if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+  rect(width*3/4,500,180,80);
+  colorMode(RGB);
+  fill(50,100,255);
+  textSize(40);
+  text("Easy",width/4,512);
+  fill(255,200,50);
+  textSize(40);
+  text("Medium",width/2,512);
+  fill(255,50,50);
+  textSize(40);
+  text("Hard",width*3/4,512);
+  colorMode(HSB);
+  fill(color2,255,170);
+  textSize(60);
+  text("Choose difficulty",width/2,350);
+  textSize(90);
+  fill(color2,255,250);
+  text("Flappy Blck",width/2,150);
+
+  fill(color2,255,170);
+  textSize(40);
+  text("Highscores",width/2,720);
+  textSize(30);
+  text("Easy: "+highscore_easy,width/4,790);
+  text("Medium: "+highscore_medium,width/2,790);
+  text("Hard: "+highscore_hard,width*3/4,790);
+
+}
+if(!(mode==0)){
+  rectMode(CORNER);
+  fill(color1,150,150);
+  ellipse(x22,700,1100,400);
+fill(color1,150,150);
+  ellipse(x44,700,1100,400);
+  fill(color1,150,200);
+  ellipse(x11,700,1100,400);
+  fill(color1,150,200);
+  ellipse(x33,700,1100,400);
+if (running == true){
+x11 += -1;
+x22 += -1;
+x33 += -1;
+  x44 += -1;
+}
+if (x11 < -800) {x11 = 2050;}
+if (x22 < -800) {x22 = 2050;}
+if (x33 < -800) {x33 = 2050;}
+if (x44 < -800) {x44 = 2050;}
+  colorMode(RGB);
+b.show();
+o.show();
+g.show();
+s.show();
+
+  image(home,700,690,70,70);
+
+if(running == false){colorMode(HSB);fill(color2,255,150);textSize(40);text("Touch or click to start!",width/2,height/2);colorMode(RGB);}
+
+if (score > highscore) {
+  highscore = score;
+}
+if ((x1 >= 170 && x1 <= 180) || (x2 >= 170 && x2 <= 180)) {
+  score = score + 0.25;
+}
+if(mode==1){if ((x1 <= 240 && x1 >= 150 && Box_y <= y1 + 500) || (x1 <= 240 && x1 >= 150 && Box_y >= y1+easy - 20)) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}
+if ((x2 <= 240 && x2 >= 150 && Box_y <= y3 + 500) || (x2 <= 240 && x2 >= 150 && Box_y >= y3+easy - 20)) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}}
+if(mode==2){if ((x1 <= 240 && x1 >= 150 && Box_y <= y1 + 500) || (x1 <= 240 && x1 >= 150 && Box_y >= y1+medium - 20)) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}
+if ((x2 <= 240 && x2 >= 150 && Box_y <= y3 + 500) || (x2 <= 240 && x2 >= 150 && Box_y >= y3+medium - 20)) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}}
+if(mode==3){if ((x1 <= 240 && x1 >= 150 && Box_y <= y1 + 500) || (x1 <= 240 && x1 >= 150 && Box_y >= y1+hard - 20)) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}
+if ((x2 <= 240 && x2 >= 150 && Box_y <= y3 + 500) || (x2 <= 240 && x2 >= 150 && Box_y >= y3+hard - 20)) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}}
+
+if (x1 <= -50) {
+  x1 = 800;
+  y1 = random(-400, 0);
+}
+if (x2 <= -50) {
+  x2 = 800;
+  y3 = random(-400, 0);
+}
+if (Box_y >= 630) {
+  Box_y = 100;
+  run = 0;
+  running = false;
+  Gravity = 0;
+  score = 0;
+}
+if (running == false) {
+  obst_speed = 0;
+  x1 = 800;
+  x2 = 1200;
+}
+}
+}
+void keyPressed() {
+
+if (key == ' ' && running == true) {
+  Gravity = -4;
+}
+if (key == ' ' && running == false) {
+  running = true;
+  run = 0.1;
+  obst_speed = 3;
+}
+}
+void mousePressed(){
+
+if (running == true) {
+  Gravity = -4;
+}
+if (running == false) {
+  running = true;
+  run = 0.1;
+  obst_speed = 3;
+}
+if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 1;}
+if(mouseX > location.x-40 && mouseX < location.x+40 && mouseY > location.y-40 && mouseY < location.y+40 && mode == 0) {velocity.y = -8;}
+if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 2;}
+if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 3;}
+if(mouseX > 700 && mouseX < 770 && mouseY > 690 && mouseY < 760 && !(mode == 0)) {mode = 0;}
+}
     </script>
 </head>
 

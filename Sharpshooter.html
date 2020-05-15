@@ -14,7 +14,8 @@
   <script type="application/processing" data-processing-target="programma">
 
 
-    PVector location;
+
+ PVector location;
  PVector velocity;
  PVector gravity;
 
@@ -39,49 +40,46 @@
 
 
  void setup() {
-     size(800,800);
-     background(255);
-     reticle = loadImage("images/sharpshooter/reticle.png");
-     circlebackground = loadImage("images/sharpshooter/circle.png");
-     home = loadImage("images/home.png");
-
-
-
-     rectMode(CENTER);
-     textAlign(CENTER);
-     textFont("Arial Bold")
-     location = new PVector(100,100);
+ 	size(800,800);
+ 	background(255);
+ 	reticle = loadImage("reticle.png");
+ 	circlebackground = loadImage("circle.png");
+ 	home = loadImage("home.png");
+ 	rectMode(CENTER);
+ 	textAlign(CENTER);
+ 	textFont("Arial Bold");
+ 	location = new PVector(100,100);
    velocity = new PVector(3,2.1);
    gravity = new PVector(0,0.1);
  }
 
  class Circle{
-     void show(){
-         colorMode(HSB);
-         tint(color,180,bright);
-         strokeWeight(8);
-         stroke(color,180,bright);
-     ellipse(randomX,randomY, radius, radius);
-         image(circlebackground,randomX,randomY,radius,radius);
-         stroke(0);
-         noTint();
-     }
+ 	void show(){
+ 		colorMode(HSB);
+ 		tint(color,180,bright);
+ 		strokeWeight(8);
+ 		stroke(color,180,bright);
+ 	ellipse(randomX,randomY, radius, radius);
+ 		image(circlebackground,randomX,randomY,radius,radius);
+ 		stroke(0);
+ 		noTint();
+ 	}
  }
 
  Circle c = new Circle();
 
  void draw() {
-     if(score > highscore_easy && mode == 1){highscore_easy = score;}
-     if(score > highscore_medium && mode == 2){highscore_medium = score;}
-     if(score > highscore_hard && mode == 3){highscore_hard = score;}
-     if(mode == 0){
-         background(color1,180,180);
-         color1 += 0.05;
-         color2 = color1 + 255/2;
-         if(color2 >= 255){color2 += -255;}
-         if (color1 >= 255){color1 = 0;}
+ 	if(score > highscore_easy && mode == 1){highscore_easy = score;}
+ 	if(score > highscore_medium && mode == 2){highscore_medium = score;}
+ 	if(score > highscore_hard && mode == 3){highscore_hard = score;}
+ 	if(mode == 0){
+ 		background(color1,180,180);
+ 		color1 += 0.05;
+ 		color2 = color1 + 255/2;
+ 		if(color2 >= 255){color2 += -255;}
+ 		if (color1 >= 255){color1 = 0;}
 
-          location.add(velocity);
+ 		 location.add(velocity);
    velocity.add(gravity);
 
 
@@ -99,130 +97,133 @@
    ellipse(location.x,location.y,80,80);
 
 
-     noStroke();
-         fill(0,0,0,180);
-         if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
-         rect(width/4,500,180,80);
-         fill(0,0,0,180);
-         if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
-         rect(width/2,500,180,80);
-         fill(0,0,0,180);
-         if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
-         rect(width*3/4,500,180,80);
-         colorMode(RGB);
-         fill(50,100,255);
-         textSize(40);
-         text("Easy",width/4,512);
-         fill(255,200,50);
-         textSize(40);
-         text("Medium",width/2,512);
-         fill(255,50,50);
-         textSize(40);
-         text("Hard",width*3/4,512);
-         colorMode(HSB);
-         fill(255);
-         textSize(80);
-         text("Choose difficulty",width/2,350);
+ 	noStroke();
+ 		fill(0,0,0,180);
+ 		if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+ 		rect(width/4,500,180,80);
+ 		fill(0,0,0,180);
+ 		if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+ 		rect(width/2,500,180,80);
+ 		fill(0,0,0,180);
+ 		if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540) {fill(0,0,0,255);}
+ 		rect(width*3/4,500,180,80);
+ 		colorMode(RGB);
+ 		fill(50,100,255);
+ 		textSize(40);
+ 		text("Easy",width/4,512);
+ 		fill(255,200,50);
+ 		textSize(40);
+ 		text("Medium",width/2,512);
+ 		fill(255,50,50);
+ 		textSize(40);
+ 		text("Hard",width*3/4,512);
+ 		colorMode(HSB);
+ 		fill(255);
+ 		fill(color2,255,200);
+ 		textSize(60);
+ 		text("Choose difficulty",width/2,350);
+ 		textSize(80);
+ 		text("Xx_Sharpshooter_xX",width/2,150);
 
-         textSize(40);
-         text("Highscores",width/2,720);
-         textSize(30);
-         text("Easy: "+highscore_easy,width/4,790);
-         text("Medium: "+highscore_medium,width/2,790);
-         text("Hard: "+highscore_hard,width*3/4,790);
+ 		textSize(40);
+ 		text("Highscores",width/2,720);
+ 		textSize(30);
+ 		text("Easy: "+highscore_easy,width/4,790);
+ 		text("Medium: "+highscore_medium,width/2,790);
+ 		text("Hard: "+highscore_hard,width*3/4,790);
 
-     }
-     if(dead == 0 && !(mode == 0)){
-     background(color1,50,255);
-         color1 += 0.05;
-         color2 = color1 + 255/2;
-         noStroke();
-         fill(color1,50,150);
-         ellipse(790,800,1100,400);
-         fill(color1,50,200);
-         ellipse(10,800,1100,400);
-         if (color1 >= 255){color1 = 0;}
-         if(color2 >= 255){color2 += -255;}
+ 	}
+ 	if(dead == 0 && !(mode == 0)){
+ 	background(color1,50,255);
+ 		color1 += 0.05;
+ 		color2 = color1 + 255/2;
+ 		noStroke();
+ 		fill(color1,50,150);
+ 		ellipse(790,800,1100,400);
+ 		fill(color1,50,200);
+ 		ellipse(10,800,1100,400);
+ 		if (color1 >= 255){color1 = 0;}
+ 		if(color2 >= 255){color2 += -255;}
 
-     noCursor();
-     //new circle
-     c.show();
-     bright+= -z;
+ 	noCursor();
+ 	//new circle
+ 	c.show();
+ 	bright+= -z;
 
-     //reticle
-     imageMode(CENTER);
+ 	//reticle
+ 	imageMode(CENTER);
 
-     image(reticle,mouseX, mouseY, width/8, height/8);
+ 	image(reticle,mouseX, mouseY, width/8, height/8);
 
-     fill(bright/255*70,255,255);
-     rect(width/2, 740, bright/255*600, 40);
+ 	fill(bright/255*70,255,255);
+ 	rect(width/2, 740, bright/255*600, 40);
 
-     fill(0,0,0,100);
+ 	fill(0,0,0,100);
 
-     fill(0);
-     textSize(60);
-     if(score == 0){text("Shoot the circle!",width/2,70);} else text(score,width/2,70);
-         textSize(20);
-     if(mode == 1){text("Easy",width/2,90);textSize(30);text("Highscore Easy: "+highscore_easy,width/2,790);}
-         if(mode == 2){text("Medium",width/2,90);textSize(30);text("Highscore Medium: "+highscore_medium,width/2,790);}
-         if(mode == 3){text("Hard",width/2,90);textSize(30);text("Highscore Hard: "+highscore_hard,width/2,790);}
-     }
-     if (dead == 1 && !(mode == 0)){
-         background(0,255,255);
-         cursor();
-         fill(255);
-         textSize(80);
-     if(mode == 1){text("Easy",width/2,90);textSize(30);text("Highscore Easy: "+highscore_easy,width/2,790);}
-         if(mode == 2){text("Medium",width/2,90);textSize(30);text("Highscore Medium: "+highscore_medium,width/2,790);}
-         if(mode == 3){text("Hard",width/2,90);textSize(30);text("Highscore Hard: "+highscore_hard,width/2,790);}
-         textSize(300);
-         text(score,width/2,height/2);
-         textSize(50);
-         text("Thanks for playing!",width/2,480);
-         noStroke();
-         fill(0,0,0,180);
-         if(mouseX > 200 && mouseX < 600 && mouseY > 540 && mouseY < 660) {fill(0,0,0,255);}
-         rect(width/2,600,400,120);
-         fill(0,0,0,180);
-         if(mouseX > 640 && mouseX < 760 && mouseY > 540 && mouseY < 660) {fill(0,0,0,255);}
-         rect(700,600,120,120);
-         image(home,700,600,100,100);
-         fill(255);
-         text("RETRY",width/2,615);
-     }
-     if (bright <= 0) {
-         dead = 1;
-     }
+ 	fill(0);
+ 	textSize(60);
+ 	if(score == 0){text("Shoot the circle!",width/2,70);} else text(score,width/2,70);
+ 		textSize(20);
+ 	if(mode == 1){text("Easy",width/2,90);textSize(30);text("Highscore Easy: "+highscore_easy,width/2,790);}
+ 		if(mode == 2){text("Medium",width/2,90);textSize(30);text("Highscore Medium: "+highscore_medium,width/2,790);}
+ 		if(mode == 3){text("Hard",width/2,90);textSize(30);text("Highscore Hard: "+highscore_hard,width/2,790);}
+ 	}
+ 	if (dead == 1 && !(mode == 0)){
+ 		background(0,255,255);
+ 		cursor();
+ 		fill(255);
+ 		textSize(80);
+ 	if(mode == 1){text("Easy",width/2,90);textSize(30);text("Highscore Easy: "+highscore_easy,width/2,790);}
+ 		if(mode == 2){text("Medium",width/2,90);textSize(30);text("Highscore Medium: "+highscore_medium,width/2,790);}
+ 		if(mode == 3){text("Hard",width/2,90);textSize(30);text("Highscore Hard: "+highscore_hard,width/2,790);}
+ 		textSize(300);
+ 		text(score,width/2,height/2);
+ 		textSize(50);
+ 		text("Thanks for playing!",width/2,480);
+ 		noStroke();
+ 		fill(0,0,0,180);
+ 		if(mouseX > 200 && mouseX < 600 && mouseY > 540 && mouseY < 660) {fill(0,0,0,255);}
+ 		rect(width/2,600,400,120);
+ 		fill(0,0,0,180);
+ 		if(mouseX > 640 && mouseX < 760 && mouseY > 540 && mouseY < 660) {fill(0,0,0,255);}
+ 		rect(700,600,120,120);
+ 		image(home,700,600,100,100);
+ 		fill(255);
+ 		text("RETRY",width/2,615);
+ 	}
+ 	if (bright <= 0) {
+ 		dead = 1;
+ 	}
  }
 
  void mouseClicked(){
-     if ((mouseX < randomX + radius/2) && (mouseX > randomX - radius/2) && (mouseY < randomY + radius/2) && (mouseY > randomY - radius/2) && (dead == 0)){
-         randomX = random(radius,800-radius);
-         randomY = random(radius,800-radius);
-         score += 1;
-         if(mode == 1){z = z+easy;}
-         if(mode == 2){z = z+medium;}
-         if(mode == 3){z = z+hard;}
-         bright = 255;
-         color = random(255);
-     }
-     if(mouseX > 200 && mouseX < 600 && mouseY > 540 && mouseY < 660 && dead == 1) {
-         dead = 0;
-         z = 0;
-         score = 0;
-         bright = 255;
-       }
-     if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 1; dead = 0;}
-     if(mouseX > location.x-40 && mouseX < location.x+40 && mouseY > location.y-40 && mouseY < location.y+40 && mode == 0) {velocity.y = -8}
-     if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 2; dead = 0;}
-     if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 3; dead = 0;}
-     if(mouseX > 640 && mouseX < 760 && mouseY > 540 && mouseY < 660 && dead == 1) {
-         mode = 0;
-         dead = 0;
-         z = 0;
-         score = 0;
-         bright = 255;
-     }
+ 	if ((mouseX < randomX + radius/2) && (mouseX > randomX - radius/2) && (mouseY < randomY + radius/2) && (mouseY > randomY - radius/2) && (dead == 0)){
+ 		randomX = random(radius,800-radius);
+ 		randomY = random(radius,800-radius);
+ 		score += 1;
+ 		if(mode == 1){z = z+easy;}
+ 		if(mode == 2){z = z+medium;}
+ 		if(mode == 3){z = z+hard;}
+ 		bright = 255;
+ 		color = random(255);
+ 	}
+ 	if(mouseX > 200 && mouseX < 600 && mouseY > 540 && mouseY < 660 && dead == 1) {
+ 		dead = 0;
+ 		z = 0;
+ 		score = 0;
+ 		bright = 255;
+ 	  }
+ 	if(mouseX > 110 && mouseX < 290 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 1; dead = 0;}
+ 	if(mouseX > location.x-40 && mouseX < location.x+40 && mouseY > location.y-40 && mouseY < location.y+40 && mode == 0) {velocity.y = -8}
+ 	if(mouseX > 310 && mouseX < 490 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 2; dead = 0;}
+ 	if(mouseX > 510 && mouseX < 690 && mouseY > 460 && mouseY < 540 && mode == 0) {mode = 3; dead = 0;}
+ 	if(mouseX > 640 && mouseX < 760 && mouseY > 540 && mouseY < 660 && dead == 1) {
+ 		mode = 0;
+ 		dead = 0;
+ 		z = 0;
+ 		score = 0;
+ 		bright = 255;
+ 	}
  }
 
 
