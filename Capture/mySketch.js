@@ -1,6 +1,6 @@
 function setup() {
 	//createAchtergrond(800, 400);
-	createCanvas(800, 400);
+	createCanvas(1200, 800);
 
 	//print(windowWidth/width + " " + windowHeight/height)
 
