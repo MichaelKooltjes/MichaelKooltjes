@@ -19,6 +19,7 @@ footer {
 .container {
   display: inline-block;
   max-width: 388px;
+  height: 600px;
   align-content: center;
   background-color: #5777b5;
   margin-bottom: 12px;
