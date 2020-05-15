@@ -1,0 +1,58 @@
+body {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #7698db;
+}
+
+footer {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1%;
+  align-content: center;
+  background-color: #5777b5;
+}
+
+.TopBar {
+  margin-bottom: 5%;
+  margin-top: 2%;
+}
+
+.Logo {
+  text-align: center;
+}
+
+.Logo a {
+  text-decoration: none;
+  font-family: sans-serif;
+  color: #f5c645;
+}
+
+.Game {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.description {
+  text-align: justify;
+  font-family: sans-serif;
+  color: #d6d6d6;
+  margin-bottom: -2%;
+}
+
+#Cnotice {
+  color: #d6d6d6;
+  font-style: italic;
+}
+
+#privacy {
+  color: #d6d6d6;
+  font-style: italic;
+  font-size: 15px;
+}
